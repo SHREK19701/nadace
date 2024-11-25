@@ -189,6 +189,35 @@ Ve venkovských oblastech je přístup ke zdravotní péči omezený. Projekty z
             <a href="#">Twitter</a>
         </p>
     </footer>
+<script>
+    const uploadForm = document.getElementById('uploadForm');
+    const imageInput = document.getElementById('imageInput');
+    const imagesContainer = document.getElementById('imagesContainer');
+
+    uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', imageInput.files[0]);
+
+        try {
+            // Odeslání obrázku na server
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) throw new Error('Chyba při nahrávání obrázku');
+
+            // Získání URL obrázku z odpovědi serveru
+            const result = await response.json();
+            const img = document.createElement('img');
+            img.src = result.url;
+            imagesContainer.appendChild(img);
+        } catch (error) {
+            alert('Nepodařilo se nahrát obrázek.');
+            console.error(error);
+        }
+    });
+</script>
 
 <script src="script.js"></script>
 </body>
