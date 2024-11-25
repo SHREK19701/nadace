@@ -6,7 +6,7 @@ const app = express();
 const PORT = 3000;
 
 
-
+app.use(express.static(path.join(__dirname, 'image')));
 
 // Obsluha základní cesty
 app.get('/', (req, res) => {
